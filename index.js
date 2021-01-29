@@ -59,13 +59,15 @@ const zooAnimals = [
   
 
  function animalNames(data){
-  return data.forEach(function(item){
-    console.log(`name: ${item.animal_name}, scientific: ${item.scientific_name}`);
+   let animalNameArray = [];
+   data.forEach(function(item){
+     return animalNameArray.push(`name: ${item.animal_name}, scientific: ${item.scientific_name}`);
+   
     
   });
-
+return animalNameArray;
 }
-console.log(animalNames(zooAnimals)); // need to fix to output names in array
+animalNames(zooAnimals); // need to fix to output names in array
 
 
   
@@ -92,11 +94,11 @@ console.log(lowerCaseNames(zooAnimals));
   */
 
  function lowPopulationAnimals(data){
-  return data.filter(function(item){
+  let newLowPopArray = data.filter(function(item){
     return item.population < 5; 
    
   });
-  /*Your Code Here*/
+  return newLowPopArray;
 }
 console.log(lowPopulationAnimals(zooAnimals));
 
@@ -109,10 +111,11 @@ console.log(lowPopulationAnimals(zooAnimals));
   */
 
   function USApop(data){
-    return data.reduce(function(item){
-      return 
+    let newUSApopArray = data.reduce(function(accumulator, item){
+      return accumulator + item.population
 
-    });
+    },0);
+    return newUSApopArray;
     /*Your Code Here*/
   }
   
@@ -125,7 +128,8 @@ console.log(lowPopulationAnimals(zooAnimals));
     * The consume function should return the invocation of cb, passing a and b into cb as arguments
   */
 
-  function consume(a, b, c){
+  function consume(a, b, cb){
+    return cb(a, b);
 
     /*Your Code Here */
   }
@@ -173,22 +177,27 @@ function greeting(firstName, lastName){
 /* 🐴🐴🐴 Step 1: Base Constructor 🐴🐴🐴
  Use the constructor function named CuboidMaker to accept properties for length, width, and height which can be initialized as an object
 */
-function CuboidMaker(){
-  // constructor(CuboidMaker){
-  //   this.length = length;
-  //   this.width = width;
-  //   this.height = height;
-  // }
-}
-  
+function CuboidMaker(attributes){
+    this.length = attributes.length;
+    this.width = attributes.width;
+    this.height = attributes.height;
+
+  }
   /*Your Code Here */
+
 
 
 /* 🐴🐴🐴 Step 2: Volume Method 🐴🐴🐴
   Create a method called volume using CuboidMaker's prototype that returns the volume of a given cuboid's length, width, and height
   Formula for cuboid volume: length * width * height   */
 
+  CuboidMaker.prototype.volume = function(){
+    return this.length * this.width * this.height;
 
+  }
+    
+
+  
 
 
 
@@ -196,14 +205,17 @@ function CuboidMaker(){
   Create another method called surfaceArea using CuboidMaker's prototype that returns the surface area of a given cuboid's length, width, and height. 
   Formula for cuboid surface area of a cube: 
   2 * (length * width + length * height + width * height)  */
-
+CuboidMaker.prototype.surfaceArea = function(){
+  return 2*(this.length * this.width + this.length * this.height + this.width * this.height);
+}
 
 
 
 
 /* 🐴🐴🐴 Step 4: Create a new object that uses CuboidMaker 🐴🐴🐴
   Create an object called cuboid that uses the new keyword to use our CuboidMaker constructor
-  Add properties and values of length: 4, width: 5, and height: 5 to cuboid. */ /////
+  Add properties and values of length: 4, width: 5, and height: 5 to cuboid. */
+const cuboid = new CuboidMaker(4, 5, 5);
 
 
 
@@ -211,20 +223,24 @@ function CuboidMaker(){
 
 // 🐴🐴🐴 Test your volume and surfaceArea methods by uncommenting the logs below: 🐴🐴🐴
 // ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️
-// console.log(cuboid.volume()); // 100
-// console.log(cuboid.surfaceArea()); // 130
+console.log(cuboid.volume()); // 100
+console.log(cuboid.surfaceArea()); // 130
+
  
 
 // 🦄🦄🦄 Topic 4: Classes 🦄🦄🦄 //
 //🦄🦄🦄 1. Take your prototypes from above and refactor into class syntax. Please rename your class CuboidMakerTwo and your object cuboidTwo 🦄🦄🦄
-class CuboidMakerTwo{
+class CuboidMakerTwo extends CuboidMaker{
+  constructor(attributes){
+    super(attributes);
+  }
 
 }
-
+const cuboidTwo = new CuboidMakerTwo(4,5,5);
 
 //🦄🦄🦄 Test your volume and surfaceArea methods by uncommenting the logs below: 🦄🦄🦄
-// console.log(cuboidTwo.volume()); // 100
-// console.log(cuboidTwo.surfaceArea()); // 130
+console.log(cuboidTwo.volume()); // 100
+console.log(cuboidTwo.surfaceArea()); // 130
 
 
 
